@@ -1,0 +1,26 @@
+{
+  "name": "@uiowa/universal-workflow",
+  "version": "1.0.1",
+  "author": "Changhui Xu <changhui-xu@uiowa.edu>",
+  "description": "universal-workflow, uiowa-universal-workflow, universal workflow",
+  "keywords": [
+    "Angular",
+    "uiowa",
+    "universal-workflow",
+    "workflow"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/changhuixu/uiowa-universal-workflow.git"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": ">=13.0.0",
+    "@angular/core": ">=13.0.0",
+    "@uiowa/spinner": ">=13.1.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}
