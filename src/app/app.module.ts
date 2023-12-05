@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import {
   UniversalWorkflowModule,
   WorkflowService,
-} from 'projects/uiowa/universal-workflow/src/public-api';
+} from '../../projects/uiowa/universal-workflow/src/public-api';
 import { UniversalWorkflowService } from './universal-workflow.service';
 import { RoutingHistoryDemoComponent } from './routing-history-demo.component';
 import { WorkflowWidgetDemoComponent } from './workflow-widget-demo.component';

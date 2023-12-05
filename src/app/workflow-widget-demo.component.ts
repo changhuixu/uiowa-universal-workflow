@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap, of, finalize } from 'rxjs';
 import { DataService } from './data.service';
-import { WorkflowAllowedActions } from 'projects/uiowa/universal-workflow/src/public-api';
+import { WorkflowAllowedActions } from '../../projects/uiowa/universal-workflow/src/public-api';
 
 @Component({
   selector: 'app-workflow-widget-demo',
