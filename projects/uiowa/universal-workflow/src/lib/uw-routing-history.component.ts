@@ -10,14 +10,13 @@ declare function formatWorkflowHistory(
 @Component({
   selector: 'uw-routing-history',
   template: `
-    <ng-container *ngIf="loading">
-      <div style="height: 20rem">
-        <loading-placeholder></loading-placeholder>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="!loading">
-      <div id="routingHistory" [innerHtml]="routingHistoryString"></div>
-    </ng-container>
+    @if(loading){
+    <div style="height: 20rem">
+      <loading-placeholder></loading-placeholder>
+    </div>
+    } @else {
+    <div id="routingHistory" [innerHtml]="routingHistoryString"></div>
+    }
   `,
   styles: [],
 })

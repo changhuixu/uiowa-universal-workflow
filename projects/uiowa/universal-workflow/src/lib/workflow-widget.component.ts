@@ -24,15 +24,12 @@ declare global {
 @Component({
   selector: 'workflow-widget',
   template: `
-    <ng-container *ngIf="!loading; else loadingDiv">
-      <div id="workflowWidgetContainer"></div>
-    </ng-container>
-
-    <ng-template #loadingDiv>
-      <div style="height: 20rem">
-        <loading-placeholder></loading-placeholder>
-      </div>
-    </ng-template>
+    @if(loading){
+    <div style="height: 20rem">
+      <loading-placeholder></loading-placeholder>
+    </div>
+    }
+    <div id="workflowWidgetContainer"></div>
   `,
   styles: [],
 })
