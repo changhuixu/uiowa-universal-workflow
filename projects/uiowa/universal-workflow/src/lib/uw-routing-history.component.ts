@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { WorkflowService } from './workflow.service';
 import { finalize } from 'rxjs';
+import { WorkflowService } from './workflow.service';
 
 declare function formatWorkflowHistory(
   workflowPath: string,
@@ -19,6 +19,7 @@ declare function formatWorkflowHistory(
     }
   `,
   styles: [],
+  standalone: false,
 })
 export class UwRoutingHistoryComponent implements OnInit {
   @Input() packageId = 0;

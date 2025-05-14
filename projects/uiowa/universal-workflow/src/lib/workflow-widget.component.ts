@@ -32,6 +32,7 @@ declare global {
     <div id="workflowWidgetContainer"></div>
   `,
   styles: [],
+  standalone: false,
 })
 export class WorkflowWidgetComponent implements OnInit {
   @Input() packageId = 0;

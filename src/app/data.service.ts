@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { WorkflowAllowedActions } from '../../projects/uiowa/universal-workflow/src/public-api';
 import { Observable, delay, of } from 'rxjs';
+import { WorkflowAllowedActions } from '../../projects/uiowa/universal-workflow/src/public-api';
 
 export interface MyForm {
   data: string[];

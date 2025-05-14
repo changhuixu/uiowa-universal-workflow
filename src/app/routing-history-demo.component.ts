@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
     <uw-routing-history [packageId]="13082237"></uw-routing-history>
   `,
   styles: [],
+  standalone: false,
 })
 export class RoutingHistoryDemoComponent {}

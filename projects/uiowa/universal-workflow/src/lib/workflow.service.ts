@@ -1,7 +1,7 @@
-import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { forkJoin, Observable, ReplaySubject, shareReplay } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import { forkJoin, Observable, ReplaySubject, shareReplay } from 'rxjs';
 
 export interface WidgetConfig {
   clientId: string;

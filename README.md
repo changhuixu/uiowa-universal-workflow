@@ -1,5 +1,7 @@
 # UIOWA Universal Workflow
 
+[![Build Status](https://github.com/changhuixu/uiowa-universal-workflow/actions/workflows/main.yml/badge.svg)](https://github.com/changhuixu/uiowa-universal-workflow/actions)
+
 [![npm](https://img.shields.io/npm/v/@uiowa/universal-workflow.svg?style=flat-square)](https://www.npmjs.com/package/@uiowa/universal-workflow)
 
 This NPM package `@uiowa/universal-workflow` serves as the standard way to display Universal Workflow widget and routing history in Angular. The package contains two components, `workflow-widget` and `uw-routing-history`, and a service `WorkflowService`.

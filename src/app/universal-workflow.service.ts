@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { WorkflowService } from '../../projects/uiowa/universal-workflow/src/public-api';
 import { Observable } from 'rxjs';
+import { WorkflowService } from '../../projects/uiowa/universal-workflow/src/public-api';
 
 @Injectable({
   providedIn: 'root',

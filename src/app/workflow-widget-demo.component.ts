@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap, of, finalize } from 'rxjs';
-import { DataService } from './data.service';
+import { finalize, of, switchMap } from 'rxjs';
 import { WorkflowAllowedActions } from '../../projects/uiowa/universal-workflow/src/public-api';
+import { DataService } from './data.service';
 
 @Component({
   selector: 'app-workflow-widget-demo',
@@ -47,6 +47,7 @@ import { WorkflowAllowedActions } from '../../projects/uiowa/universal-workflow/
     </ng-container>
   `,
   styles: [],
+  standalone: false,
 })
 export class WorkflowWidgetDemoComponent implements OnInit {
   formId = '';

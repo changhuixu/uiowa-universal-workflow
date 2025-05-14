@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { SpinnerModule } from '@uiowa/spinner';
-import { WorkflowWidgetComponent } from './workflow-widget.component';
 import { UwRoutingHistoryComponent } from './uw-routing-history.component';
+import { WorkflowWidgetComponent } from './workflow-widget.component';
 
 @NgModule({
   declarations: [WorkflowWidgetComponent, UwRoutingHistoryComponent],

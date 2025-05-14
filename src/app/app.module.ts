@@ -1,17 +1,17 @@
+import { provideHttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { SpinnerModule } from '@uiowa/spinner';
 
-import { AppComponent } from './app.component';
 import {
   UniversalWorkflowModule,
   WorkflowService,
 } from '../../projects/uiowa/universal-workflow/src/public-api';
-import { UniversalWorkflowService } from './universal-workflow.service';
+import { AppComponent } from './app.component';
 import { RoutingHistoryDemoComponent } from './routing-history-demo.component';
+import { UniversalWorkflowService } from './universal-workflow.service';
 import { WorkflowWidgetDemoComponent } from './workflow-widget-demo.component';
 
 @NgModule({
@@ -20,19 +20,24 @@ import { WorkflowWidgetDemoComponent } from './workflow-widget-demo.component';
     RoutingHistoryDemoComponent,
     WorkflowWidgetDemoComponent,
   ],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
-    HttpClientModule,
     SpinnerModule,
-    RouterModule.forRoot([
-      { path: '', pathMatch: 'full', redirectTo: 'routing-history' },
-      { path: 'routing-history', component: RoutingHistoryDemoComponent },
-      { path: 'workflow-widget', component: WorkflowWidgetDemoComponent },
-      { path: '**', redirectTo: '' },
-    ]),
+    RouterModule.forRoot(
+      [
+        { path: '', pathMatch: 'full', redirectTo: 'routing-history' },
+        { path: 'routing-history', component: RoutingHistoryDemoComponent },
+        { path: 'workflow-widget', component: WorkflowWidgetDemoComponent },
+        { path: '**', redirectTo: '' },
+      ],
+      { useHash: true }
+    ),
     UniversalWorkflowModule,
   ],
-  providers: [{ provide: WorkflowService, useClass: UniversalWorkflowService }],
-  bootstrap: [AppComponent],
+  providers: [
+    { provide: WorkflowService, useClass: UniversalWorkflowService },
+    provideHttpClient(),
+  ],
 })
 export class AppModule {}

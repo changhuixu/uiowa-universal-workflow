@@ -1,9 +1,13 @@
 {
-    "cSpell.words": [
-        "devkit",
-        "ghpage",
-        "noopener",
-        "packagr",
-        "uiowa"
-    ]
+  "cSpell.words": [
+    "Changhui",
+    "devkit",
+    "ghpage",
+    "noopener",
+    "packagr",
+    "uiowa"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  }
 }
