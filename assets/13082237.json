@@ -1,0 +1,84 @@
+[
+    {
+        "@class": "initiation",
+        "actionDate": "2022-05-24T10:36:11",
+        "person": {
+            "id": 212726,
+            "displayName": "Reynolds-Miller, Sherry K",
+            "hrdeptdesc": "VPFO-Cbs-Admin Group",
+            "personType": "Faculty/Staff",
+            "title": "Senior Business Analyst",
+            "univid": "00048426",
+            "email": "sherry-reynolds@uiowa.edu",
+            "campusPostalAddress": "126D MBSB",
+            "officePhone": "+1 319 384 3719",
+            "jobCode": "PAB3",
+            "naturalKey": null,
+            "hawkid": "shreynol",
+            "directoryRestricted": false,
+            "activeUser": true
+        }
+    },
+    {
+        "@class": "signature",
+        "actionDate": "2022-05-24T10:39:53",
+        "person": {
+            "id": 51579,
+            "displayName": "Jesse, Margaret A",
+            "hrdeptdesc": "ITS-Teach, Learn, & Technology",
+            "personType": "Faculty/Staff",
+            "title": "Senior IT Director",
+            "univid": "00095792",
+            "email": "maggie-jesse@uiowa.edu",
+            "campusPostalAddress": "2800 UCC",
+            "officePhone": "+1 319 335 6335",
+            "jobCode": "PIM3",
+            "naturalKey": null,
+            "hawkid": "mjesse",
+            "directoryRestricted": false,
+            "activeUser": true
+        },
+        "stop": {
+            "name": "Dept",
+            "stopNumber": 1
+        },
+        "permission": "SIGNATURE_REQUIRED",
+        "context": null,
+        "resolution": {
+            "@class": "person",
+            "id": 51579,
+            "displayName": "Jesse, Margaret A",
+            "hrdeptdesc": "ITS-Teach, Learn, & Technology",
+            "personType": "Faculty/Staff",
+            "title": "Senior IT Director",
+            "univid": "00095792",
+            "email": "maggie-jesse@uiowa.edu",
+            "campusPostalAddress": "2800 UCC",
+            "officePhone": "+1 319 335 6335",
+            "jobCode": "PIM3",
+            "naturalKey": null,
+            "hawkid": "mjesse",
+            "directoryRestricted": false,
+            "activeUser": true
+        },
+        "routingDate": "2022-05-24T10:36:11",
+        "office": {
+            "id": 5635,
+            "name": "ITS-Teach, Learn, & Technology",
+            "naturalKey": "43-5075",
+            "state": "IMPORTED",
+            "scope": {
+                "id": 23,
+                "naturalKey": "department",
+                "name": "Department",
+                "description": null
+            },
+            "roleSync": false
+        },
+        "state": "VOIDED",
+        "autoSigned": null,
+        "inboxSigned": null,
+        "isInInbox": false,
+        "signatureId": 5662174
+    }
+]
