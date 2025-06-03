@@ -7,52 +7,34 @@ import { DataService } from './data.service';
 @Component({
   selector: 'app-workflow-widget-demo',
   template: `
-    <div
-      *ngIf="loading"
-      class="d-flex justify-content-center align-items-center my-5"
-    >
+    @if(loading){
+    <div class="d-flex justify-content-center align-items-center my-5">
       <uiowa-ring></uiowa-ring>
     </div>
-
-    <ng-container *ngIf="!loading">
-      <ng-container *ngIf="dataRows; else noResult">
-        <div>
-          <div *ngFor="let item of dataRows">{{ item }}</div>
-        </div>
-
-        <ng-container *ngIf="uwPermissions?.canSign; else history">
-          <workflow-widget
-            [packageId]="packageId"
-            [signatureId]="signatureId"
-          ></workflow-widget>
-        </ng-container>
-      </ng-container>
-
-      <ng-template #noResult>
-        <div class="alert alert-danger my-3" role="alert">
-          <p *ngIf="!packageId">
-            Please provide a Workflow PackageID. You may want to navigate from
-            your workflow inbox to this website.
-          </p>
-          <p *ngIf="packageId">
-            The Universal Workflow package ID "{{ packageId }}" is invalid or
-            you don't have enough permissions to view this workflow package.
-          </p>
-        </div>
-      </ng-template>
-
-      <ng-template #history>
-        <uw-routing-history [packageId]="packageId"></uw-routing-history>
-      </ng-template>
-    </ng-container>
+    } @else { @if(dataRows){
+    <div>
+      @for(item of dataRows; track item){
+      <div>{{ item }}</div>
+      }
+    </div>
+    @if(uwPermissions?.canSign){
+    <workflow-widget [packageId]="packageId" />
+    } @else {
+    <uw-routing-history [packageId]="packageId" />
+    } } @else {
+    <div class="alert alert-danger my-3" role="alert">
+      @if(packageId){ The Universal Workflow package ID "{{ packageId }}" is
+      invalid or you don't have enough permissions to view this workflow
+      package. } @else { Please provide a Workflow PackageID. You may want to
+      navigate from your workflow inbox to this website. }
+    </div>
+    } }
   `,
   styles: [],
   standalone: false,
 })
 export class WorkflowWidgetDemoComponent implements OnInit {
-  formId = '';
   packageId = 0;
-  signatureId = '';
   loading = false;
   dataRows: string[] = [];
   uwPermissions: WorkflowAllowedActions | null = null;
@@ -67,9 +49,7 @@ export class WorkflowWidgetDemoComponent implements OnInit {
           if (!params) {
             return of(null);
           }
-          this.formId = params.get('formId') || '';
           this.packageId = +(params.get('packageId') || '');
-          this.signatureId = params.get('signatureId') || '';
           if (!this.packageId) {
             return of(null);
           }
