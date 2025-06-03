@@ -15,29 +15,22 @@ This package depends on `@uiowa/spinner` which shows a loading placeholder while
 - The Widget Component
 
   ```html
-  <ng-container *ngIf="uwPermissions?.canSign; else history">
-    <workflow-widget
-      [packageId]="packageId"
-      [signatureId]="signatureId"
-    ></workflow-widget>
-  </ng-container>
-
-  <ng-template #history>
-    <uw-routing-history [packageId]="packageId"></uw-routing-history>
-  </ng-template>
+  @if(uwPermissions?.canSign){
+  <workflow-widget [packageId]="packageId" />
+  } @else {
+  <uw-routing-history [packageId]="packageId" />
+  }
   ```
 
   ```ts
-    ngOnInit(): void {
+  ngOnInit(): void {
     this.route.queryParamMap
       .pipe(
         switchMap((params: ParamMap) => {
           if (!params) {
             return of(null);
           }
-          this.formId = params.get('formId') || '';
           this.packageId = +(params.get('packageId') || '');
-          this.signatureId = params.get('signatureId') || '';
           if (!this.packageId) {
             return of(null);
           }

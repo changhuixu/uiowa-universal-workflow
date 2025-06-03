@@ -6,17 +6,11 @@ declare global {
   interface Window {
     /**
      * Global WorkflowWidget object
-     * https://workflow.uiowa.edu/help/article/36/6
+     * https://docs.ais.its.uiowa.edu/workflow/widget.html
      */
     WorkflowWidget: {
-      form_id: number;
       package_id: number;
-      signature_id: string;
-      scope: string;
       client_id: string;
-      environment: string;
-      post_sign_void?: string;
-      post_version_mismatch?: string;
     };
   }
 }
@@ -29,14 +23,13 @@ declare global {
       <loading-placeholder></loading-placeholder>
     </div>
     }
-    <div id="workflowWidgetContainer"></div>
+    <div id="widgetContainer"></div>
   `,
   styles: [],
   standalone: false,
 })
 export class WorkflowWidgetComponent implements OnInit {
   @Input() packageId = 0;
-  @Input() signatureId = '';
   loading = false;
 
   constructor(private readonly svc: WorkflowService) {}
@@ -45,14 +38,8 @@ export class WorkflowWidgetComponent implements OnInit {
     this.loading = true;
     this.svc.getWorkflowWidgetConfig().subscribe((c) => {
       window.WorkflowWidget = {
-        form_id: c.formId,
         package_id: this.packageId,
-        scope: c.scope,
         client_id: c.clientId,
-        environment: c.workflowEnvironment,
-        signature_id: this.signatureId,
-        post_sign_void: '',
-        post_version_mismatch: '',
       };
       this.svc
         .lazyLoadWorkflowWidget()

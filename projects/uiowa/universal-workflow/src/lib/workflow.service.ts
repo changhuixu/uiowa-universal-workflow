@@ -1,13 +1,12 @@
 import { DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { forkJoin, Observable, ReplaySubject, shareReplay } from 'rxjs';
+import { Observable, ReplaySubject, shareReplay } from 'rxjs';
 
 export interface WidgetConfig {
   clientId: string;
   workflowEnvironment: string;
   formId: number;
-  scope: string;
 }
 
 export interface WorkflowAllowedActions {
@@ -25,8 +24,7 @@ export interface WorkflowAllowedActions {
 @Injectable({ providedIn: 'root' })
 export class WorkflowService {
   protected readonly api: string = 'api/workflow';
-  private _loadedLibraries: { [url: string]: ReplaySubject<number> } = {};
-  today = new Date();
+  private _loadedLibraries: { [url: string]: ReplaySubject<boolean> } = {};
   private _widgetConfig$?: Observable<WidgetConfig>;
 
   constructor(
@@ -51,26 +49,16 @@ export class WorkflowService {
 
   lazyLoadWorkflowWidget(): Observable<any> {
     return this.loadScript(
-      'https://workflow.uiowa.edu/workflow-widget/workflow.js?ver=' +
+      'https://workflow.uiowa.edu/workflow-widget/widgetLoader.js?v=' +
         new Date().getTime()
     );
   }
 
   lazyLoadHistoryWidget(): Observable<any> {
-    return forkJoin([
-      this.loadScript(
-        'https://workflow.uiowa.edu/workflow-widget/historyFormat.js?ver=' +
-          this.today.getTime()
-      ),
-      this.loadScript(
-        'https://workflow.uiowa.edu/workflow-widget/assets/js/workflow-widget-route-table.js?ver=' +
-          this.today.getTime()
-      ),
-      this.loadScript('https://code.jquery.com/jquery-3.6.0.min.js'),
-      this.loadScript(
-        'https://workflow.uiowa.edu/workflow-widget/assets/js/moment/moment.2.7.0.js'
-      ),
-    ]);
+    return this.loadScript(
+      'https://workflow.uiowa.edu/assets/dist/embeds/history/routing-history.js?cache=' +
+        new Date().toISOString().slice(0, 13).replace(/\D/g, '')
+    ); // this script will be cached
   }
 
   private loadScript(url: string): Observable<any> {
@@ -85,10 +73,13 @@ export class WorkflowService {
     script.async = true;
     script.src = url;
     script.onload = () => {
-      this._loadedLibraries[url].next(1);
+      this._loadedLibraries[url].next(true);
       this._loadedLibraries[url].complete();
     };
-
+    script.onerror = () => {
+      this._loadedLibraries[url].next(false);
+      this._loadedLibraries[url].complete();
+    };
     this.document.body.appendChild(script);
 
     return this._loadedLibraries[url].asObservable();

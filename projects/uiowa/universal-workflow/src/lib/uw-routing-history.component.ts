@@ -2,29 +2,52 @@ import { Component, Input, OnInit } from '@angular/core';
 import { finalize } from 'rxjs';
 import { WorkflowService } from './workflow.service';
 
-declare function formatWorkflowHistory(
-  workflowPath: string,
-  package_id: number
-): string;
-
 @Component({
   selector: 'uw-routing-history',
   template: `
-    @if(loading){
-    <div style="height: 20rem">
-      <loading-placeholder></loading-placeholder>
+    <div class="panel">
+      <div class="panel-heading">
+        <div>Workflow Routing History</div>
+        <div>Package ID #{{ packageId }}</div>
+      </div>
+      <div class="panel-body">
+        @if(loading){
+        <div style="height: 20rem">
+          <loading-placeholder></loading-placeholder>
+        </div>
+        } @else {
+        <routing-history [attr.history]="history | json"></routing-history>
+        }
+      </div>
     </div>
-    } @else {
-    <div id="routingHistory" [innerHtml]="routingHistoryString"></div>
-    }
   `,
-  styles: [],
+  styles: [
+    `
+      .panel {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .panel-heading {
+        background: #fff4ad;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        font-family: 'Segoe UI', 'Roboto', Arial, Helvetica, sans-serif;
+        font-weight: 600;
+      }
+      .panel-body {
+        padding: 1rem;
+      }
+    `,
+  ],
   standalone: false,
 })
 export class UwRoutingHistoryComponent implements OnInit {
   @Input() packageId = 0;
   loading = false;
-  routingHistoryString = '';
+  history = '';
 
   constructor(private readonly svc: WorkflowService) {}
 
@@ -34,12 +57,7 @@ export class UwRoutingHistoryComponent implements OnInit {
       this.svc
         .getPackageRoutingHistory(this.packageId || 0)
         .pipe(finalize(() => (this.loading = false)))
-        .subscribe((x) => {
-          this.routingHistoryString = formatWorkflowHistory(
-            x,
-            this.packageId || 0
-          );
-        });
+        .subscribe((x) => (this.history = x));
     });
   }
 }
