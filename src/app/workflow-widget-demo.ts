@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { finalize, of, switchMap } from 'rxjs';
-import { WorkflowAllowedActions } from '../../projects/uiowa/universal-workflow/src/public-api';
+import {
+  UwRoutingHistory,
+  WorkflowAllowedActions,
+  WorkflowWidget,
+} from '../../projects/uiowa/universal-workflow/src/public-api';
 import { DataService } from './data.service';
 
 @Component({
   selector: 'app-workflow-widget-demo',
+  imports: [WorkflowWidget, UwRoutingHistory],
   template: `
-    @if(loading){
+    @if(loading()){
     <div class="d-flex justify-content-center align-items-center my-5">
-      <uiowa-ring></uiowa-ring>
+      <h2>Loading...</h2>
     </div>
     } @else { @if(dataRows){
     <div>
@@ -23,19 +28,17 @@ import { DataService } from './data.service';
     <uw-routing-history [packageId]="packageId" />
     } } @else {
     <div class="alert alert-danger my-3" role="alert">
-      @if(packageId){ The Universal Workflow package ID "{{ packageId }}" is
-      invalid or you don't have enough permissions to view this workflow
-      package. } @else { Please provide a Workflow PackageID. You may want to
-      navigate from your workflow inbox to this website. }
+      @if(packageId){ The Universal Workflow package ID "{{ packageId }}" is invalid or you don't
+      have enough permissions to view this workflow package. } @else { Please provide a Workflow
+      PackageID. You may want to navigate from your workflow inbox to this website. }
     </div>
     } }
   `,
-  styles: [],
-  standalone: false,
+  styles: ``,
 })
-export class WorkflowWidgetDemoComponent implements OnInit {
+export class WorkflowWidgetDemo implements OnInit {
   packageId = 0;
-  loading = false;
+  loading = signal(false);
   dataRows: string[] = [];
   uwPermissions: WorkflowAllowedActions | null = null;
 
@@ -54,10 +57,8 @@ export class WorkflowWidgetDemoComponent implements OnInit {
             return of(null);
           }
 
-          this.loading = true;
-          return this.svc
-            .getMyForm(this.packageId)
-            .pipe(finalize(() => (this.loading = false)));
+          this.loading.set(true);
+          return this.svc.getMyForm(this.packageId).pipe(finalize(() => this.loading.set(false)));
         })
       )
       .subscribe((x) => {

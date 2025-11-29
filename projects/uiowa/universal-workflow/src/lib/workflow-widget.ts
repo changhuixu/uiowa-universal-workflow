@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, signal } from '@angular/core';
 import { finalize } from 'rxjs';
+import { LoadingPlaceholder } from './loading-placeholder';
 import { WorkflowService } from './workflow.service';
 
 declare global {
@@ -17,25 +18,23 @@ declare global {
 
 @Component({
   selector: 'workflow-widget',
+  imports: [LoadingPlaceholder],
   template: `
-    @if(loading){
-    <div style="height: 20rem">
-      <loading-placeholder></loading-placeholder>
-    </div>
+    @if(loading()){
+    <div style="height: 20rem"><loading-placeholder /></div>
     }
     <div id="widgetContainer"></div>
   `,
-  styles: [],
-  standalone: false,
+  styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WorkflowWidgetComponent implements OnInit {
+export class WorkflowWidget implements OnInit {
   @Input() packageId = 0;
-  loading = false;
+  loading = signal(true);
 
   constructor(private readonly svc: WorkflowService) {}
 
   ngOnInit(): void {
-    this.loading = true;
     this.svc.getWorkflowWidgetConfig().subscribe((c) => {
       window.WorkflowWidget = {
         package_id: this.packageId,
@@ -43,7 +42,7 @@ export class WorkflowWidgetComponent implements OnInit {
       };
       this.svc
         .lazyLoadWorkflowWidget()
-        .pipe(finalize(() => (this.loading = false)))
+        .pipe(finalize(() => this.loading.set(false)))
         .subscribe();
     });
   }
