@@ -1,0 +1,26 @@
+<nav class="tab">
+  <a routerLink="routing-history" routerLinkActive="active"> Routing History Demo </a>
+  <a
+    routerLink="workflow-widget"
+    [queryParams]="{
+      formId: 15390,
+      packageId: 12560209,
+      signatureId: 6019369
+    }"
+    routerLinkActive="active"
+  >
+    Workflow Widget Demo
+  </a>
+  <a
+    title="github"
+    href="https://github.com/changhuixu/uiowa-universal-workflow"
+    target="_blank"
+    rel="noopener"
+    style="float: right"
+  >
+    GitHub Repo
+  </a>
+</nav>
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

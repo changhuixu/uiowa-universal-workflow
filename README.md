@@ -35,10 +35,8 @@ This package depends on `@uiowa/spinner` which shows a loading placeholder while
             return of(null);
           }
 
-          this.loading = true;
-          return this.svc
-            .getMyForm(this.packageId)
-            .pipe(finalize(() => (this.loading = false)));
+          this.loading.set(true);
+          return this.svc.getMyForm(this.packageId).pipe(finalize(() => this.loading.set(false)));
         })
       )
       .subscribe((x) => {
@@ -53,7 +51,7 @@ This package depends on `@uiowa/spinner` which shows a loading placeholder while
 - The Routing History Component
 
   ```html
-  <uw-routing-history [packageId]="13082237"></uw-routing-history>
+  <uw-routing-history [packageId]="13082237" />
   ```
 
 - The Workflow Service

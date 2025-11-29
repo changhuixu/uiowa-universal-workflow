@@ -1,0 +1,37 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+@Component({
+  selector: 'loading-placeholder',
+  imports: [],
+  template: `<div class="placeholder"></div>`,
+  styles: [
+    `
+      .placeholder {
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+      }
+      .placeholder::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: -200px;
+        top: 0;
+        height: 100%;
+        width: 200px;
+        background: linear-gradient(to right, transparent 0%, #e8e8e8 30%, transparent 100%);
+        animation: load 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+      @keyframes load {
+        from {
+          left: -200px;
+        }
+        to {
+          left: 100%;
+        }
+      }
+    `,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class LoadingPlaceholder {}

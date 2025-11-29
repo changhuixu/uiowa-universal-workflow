@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, ReplaySubject, shareReplay } from 'rxjs';
 
 export interface WidgetConfig {
@@ -27,10 +27,8 @@ export class WorkflowService {
   private _loadedLibraries: { [url: string]: ReplaySubject<boolean> } = {};
   private _widgetConfig$?: Observable<WidgetConfig>;
 
-  constructor(
-    protected httpClient: HttpClient,
-    @Inject(DOCUMENT) private readonly document: Document
-  ) {}
+  protected httpClient = inject(HttpClient);
+  private document = inject(DOCUMENT);
 
   getWorkflowWidgetConfig(): Observable<WidgetConfig> {
     if (!this._widgetConfig$) {
@@ -42,15 +40,12 @@ export class WorkflowService {
   }
 
   getPackageRoutingHistory(packageId: number): Observable<string> {
-    return this.httpClient.get<string>(
-      `${this.api}/packages/${packageId}/routing-history`
-    );
+    return this.httpClient.get<string>(`${this.api}/packages/${packageId}/routing-history`);
   }
 
   lazyLoadWorkflowWidget(): Observable<any> {
     return this.loadScript(
-      'https://workflow.uiowa.edu/workflow-widget/widgetLoader.js?v=' +
-        new Date().getTime()
+      'https://workflow.uiowa.edu/workflow-widget/widgetLoader.js?v=' + new Date().getTime()
     );
   }
 
@@ -58,7 +53,7 @@ export class WorkflowService {
     return this.loadScript(
       'https://workflow.uiowa.edu/assets/dist/embeds/history/routing-history.js?cache=' +
         new Date().toISOString().slice(0, 13).replace(/\D/g, '')
-    ); // this script will be cached
+    ); // this script will be cached for an hour
   }
 
   private loadScript(url: string): Observable<any> {

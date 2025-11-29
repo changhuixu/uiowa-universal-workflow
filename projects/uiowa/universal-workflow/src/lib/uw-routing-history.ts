@@ -1,22 +1,31 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { JsonPipe } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  input,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { finalize } from 'rxjs';
+import { LoadingPlaceholder } from './loading-placeholder';
 import { WorkflowService } from './workflow.service';
 
 @Component({
   selector: 'uw-routing-history',
+  imports: [JsonPipe, LoadingPlaceholder],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <div class="panel">
       <div class="panel-heading">
         <div>Workflow Routing History</div>
-        <div>Package ID #{{ packageId }}</div>
+        <div>Package ID #{{ packageId() }}</div>
       </div>
       <div class="panel-body">
-        @if(loading){
-        <div style="height: 20rem">
-          <loading-placeholder></loading-placeholder>
-        </div>
+        @if(loading()){
+        <div style="height: 20rem"><loading-placeholder /></div>
         } @else {
-        <routing-history [attr.history]="history | json"></routing-history>
+        <routing-history [attr.history]="history() | json"></routing-history>
         }
       </div>
     </div>
@@ -42,22 +51,21 @@ import { WorkflowService } from './workflow.service';
       }
     `,
   ],
-  standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UwRoutingHistoryComponent implements OnInit {
-  @Input() packageId = 0;
-  loading = false;
-  history = '';
+export class UwRoutingHistory implements OnInit {
+  packageId = input<number>(0);
+  loading = signal(true);
+  history = signal('');
 
   constructor(private readonly svc: WorkflowService) {}
 
   ngOnInit(): void {
-    this.loading = true;
     this.svc.lazyLoadHistoryWidget().subscribe((_) => {
       this.svc
-        .getPackageRoutingHistory(this.packageId || 0)
-        .pipe(finalize(() => (this.loading = false)))
-        .subscribe((x) => (this.history = x));
+        .getPackageRoutingHistory(this.packageId() || 0)
+        .pipe(finalize(() => this.loading.set(false)))
+        .subscribe((x) => this.history.set(x));
     });
   }
 }

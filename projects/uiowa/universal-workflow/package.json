@@ -1,6 +1,6 @@
 {
   "name": "@uiowa/universal-workflow",
-  "version": "2.0.0-pre2",
+  "version": "2.0.0",
   "author": "Changhui Xu <changhui-xu@uiowa.edu>",
   "description": "universal-workflow, uiowa-universal-workflow, universal workflow",
   "keywords": [
@@ -15,9 +15,8 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": ">=19.0.0",
-    "@angular/core": ">=19.0.0",
-    "@uiowa/spinner": ">=19.0.0"
+    "@angular/common": ">=21.0.0",
+    "@angular/core": ">=21.0.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
